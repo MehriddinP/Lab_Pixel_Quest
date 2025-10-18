@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.Collections.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,16 +10,16 @@ using UnityEngine.SceneManagement;
 public class jeocontroller : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
     public int speed = 5;
     public string nextLevel = "Scene_2";
-    string varible1 = "hello";
-    int varible2 = 11375;
+
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Hello World");
-        Debug.Log(varible1 + varible2);
+
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
 
     }
  
@@ -30,6 +31,26 @@ public class jeocontroller : MonoBehaviour
         */
         float xInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(xInput*speed, rb.velocity.y);
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            sr.color = Color.yellow;
+
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            sr.color = Color.black;
+
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            sr.color = Color.blue;
+
+
+        }
+
+
         /*
         if (Input.GetKeyDown(KeyCode.W))
 
@@ -54,7 +75,7 @@ public class jeocontroller : MonoBehaviour
         {
             transform.position += new Vector3(-1, 0, 0);
         }
-        
+
 
 
         rb.velocity = Vector2.left;
