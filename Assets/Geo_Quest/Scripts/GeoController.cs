@@ -4,12 +4,13 @@ using System.ComponentModel;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class jeocontroller : MonoBehaviour
 {
     private Rigidbody2D rb;
-    public int speed = 100;
-
+    public int speed = 5;
+    public string nextLevel = "Scene_2";
     string varible1 = "hello";
     int varible2 = 11375;
     // Start is called before the first frame update
@@ -58,7 +59,23 @@ public class jeocontroller : MonoBehaviour
 
         rb.velocity = Vector2.left;
         */
-    } 
+    }
 
-   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "Death":
+                {
+                    string thisLevel = SceneManager.GetActiveScene ().name;
+                    SceneManager.LoadScene(thisLevel);
+                    break;
+                }
+            case "Finish":
+                {
+                    SceneManager.LoadScene(nextLevel);
+                    break;
+                }
+        }
+    }
 }
