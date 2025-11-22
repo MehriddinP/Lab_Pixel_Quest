@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 49b578893bcb3b84ea24581e4803b5ce
+guid: a043070cbe411a74faaedad71c7641bc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -95,49 +95,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Hero_Idle_0
-      rect:
-        serializedVersion: 2
-        x: 42
-        y: 30
-        width: 14
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 90daa80517d2c904595bcdd3c1c1da8e
-      internalID: 1811694897
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hero_Idle_1
-      rect:
-        serializedVersion: 2
-        x: 138
-        y: 30
-        width: 14
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 395345b2b1f10db4ab8aa6ccc44a6199
-      internalID: 1920111810
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -148,9 +106,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Hero_Idle_0: 1811694897
-      Hero_Idle_1: 1920111810
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

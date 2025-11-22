@@ -6,6 +6,12 @@ public class Player : MonoBehaviour
 {
 
     public float speed = 5f; // скорость движения
+    private Animator animator;
+
+    private void Start()
+    {
+         animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -18,6 +24,15 @@ public class Player : MonoBehaviour
 
         // Двигаем героя
         transform.position += (Vector3)move * speed * Time.deltaTime;
+
+        if(move.magnitude > 0)
+        {
+            animator.SetBool("isRunning ", true);
+        }
+        else
+        {
+                    animator.SetBool("isRunning", false);
+        }
     }
 
 }
