@@ -27,11 +27,11 @@ public class Player : MonoBehaviour
 
         if(move.magnitude > 0)
         {
-            animator.SetBool("isRunning ", true);
+          animator.SetBool("isRunning",true);
         }
         else
         {
-                    animator.SetBool("isRunning", false);
+          animator.SetBool("isRunning",false);
         }
     }
 
