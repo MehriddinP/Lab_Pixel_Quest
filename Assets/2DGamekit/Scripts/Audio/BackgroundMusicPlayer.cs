@@ -42,28 +42,28 @@ namespace Gamekit2D
         protected bool m_TransferMusicTime, m_TransferAmbientTime;
         protected BackgroundMusicPlayer m_OldInstanceToDestroy = null;
 
-        //every clip pushed on that stack throught "PushClip" function will play until completed, then pop
-        //once that stack is empty, it revert to the musicAudioClip
+        
+        
         protected Stack<AudioClip> m_MusicStack = new Stack<AudioClip>();
 
         void Awake ()
         {
-            // If there's already a player...
+            
             if (Instance != null && Instance != this)
             {
-                //...if it use the same music clip, we set the audio source to be at the same position, so music don't restart
+                
                 if(Instance.musicAudioClip == musicAudioClip)
                 {
                     m_TransferMusicTime = true;
                 }
 
-                //...if it use the same ambient clip, we set the audio source to be at the same position, so ambient don't restart
+                
                 if (Instance.ambientAudioClip == ambientAudioClip)
                 {
                     m_TransferAmbientTime = true;
                 }
 
-                // ... destroy the pre-existing player.
+                
                 m_OldInstanceToDestroy = Instance;
             }
         
@@ -98,7 +98,7 @@ namespace Gamekit2D
 
         private void Start()
         {
-            //if delete & trasnfer time only in Start so we avoid the small gap that doing everything at the same time in Awake would create 
+             
             if (m_OldInstanceToDestroy != null)
             {
                 if (m_TransferAmbientTime) m_AmbientAudioSource.timeSamples = m_OldInstanceToDestroy.m_AmbientAudioSource.timeSamples;
@@ -112,7 +112,7 @@ namespace Gamekit2D
         {
             if(m_MusicStack.Count > 0)
             {
-                //isPlaying will be false once the current clip end up playing
+                
                 if(!m_MusicAudioSource.isPlaying)
                 {
                     m_MusicStack.Pop();
@@ -122,7 +122,7 @@ namespace Gamekit2D
                         m_MusicAudioSource.Play();
                     }
                     else
-                    {//Back to looping music clip
+                    {
                         m_MusicAudioSource.clip = musicAudioClip;
                         m_MusicAudioSource.loop = true;
                         m_MusicAudioSource.Play();

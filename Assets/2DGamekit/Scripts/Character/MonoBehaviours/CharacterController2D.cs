@@ -80,9 +80,7 @@ namespace Gamekit2D
             m_Rigidbody2D.MovePosition(position);
         }
 
-        /// <summary>
-        /// This updates the state of IsGrounded.  It is called automatically in FixedUpdate but can be called more frequently if higher accurracy is required.
-        /// </summary>
+        
         public void CheckCapsuleEndCollisions(bool bottom = true)
         {
             Vector2 raycastDirection;

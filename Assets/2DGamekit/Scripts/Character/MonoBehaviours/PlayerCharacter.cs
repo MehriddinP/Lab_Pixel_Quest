@@ -109,12 +109,10 @@ namespace Gamekit2D
 
         protected const float k_MinHurtJumpAngle = 0.001f;
         protected const float k_MaxHurtJumpAngle = 89.999f;
-        protected const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
-
-        //used in non alloc version of physic function
+        protected const float k_GroundedStickingVelocityMultiplier = 3f;    
         protected ContactPoint2D[] m_ContactsBuffer = new ContactPoint2D[16];
 
-        // MonoBehaviour Messages - called by Unity internally.
+        
         void Awake()
         {
             s_PlayerInstance = this;
@@ -210,7 +208,7 @@ namespace Gamekit2D
 
         public void Unpause()
         {
-            //if the timescale is already > 0, we 
+             
             if (Time.timeScale > 0)
                 return;
 
@@ -222,14 +220,13 @@ namespace Gamekit2D
             Time.timeScale = 1;
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("UIMenus");
             PlayerInput.Instance.GainControl();
-            //we have to wait for a fixed update so the pause button state change, otherwise we can get in case were the update
-            //of this script happen BEFORE the input is updated, leading to setting the game in pause once again
+            
             yield return new WaitForFixedUpdate();
             yield return new WaitForEndOfFrame();
             m_InPause = false;
         }
 
-        // Protected functions.
+        
         protected void UpdateBulletSpawnPointPositions()
         {
             if (rightBulletSpawnPointAnimated)
@@ -313,8 +310,7 @@ namespace Gamekit2D
 
         protected void SpawnBullet()
         {
-            //we check if there is a wall between the player and the bullet spawn position, if there is, we don't spawn a bullet
-            //otherwise, the player can "shoot throught wall" because the arm extend to the other side of the wall
+            
             Vector2 testPosition = transform.position;
             testPosition.y = m_CurrentBulletSpawnPoint.position.y;
             Vector2 direction = (Vector2)m_CurrentBulletSpawnPoint.position - testPosition;
@@ -333,7 +329,7 @@ namespace Gamekit2D
             rangedAttackAudioPlayer.PlayRandomSound();
         }
 
-        // Public functions - called mostly by StateMachineBehaviours in the character's Animator Controller but also by Events.
+        
         public void SetMoveVector(Vector2 newMoveVector)
         {
             m_MoveVector = newMoveVector;
@@ -442,7 +438,7 @@ namespace Gamekit2D
                 FindCurrentSurface();
 
                 if (!wasGrounded && m_MoveVector.y < -1.0f)
-                {//only play the landing sound if falling "fast" enough (avoid small bump playing the landing sound)
+                {
                     landingAudioPlayer.PlayRandomSound(m_CurrentSurface);
                 }
             }
@@ -504,7 +500,7 @@ namespace Gamekit2D
             }
 
             if(previousPushable != null && m_CurrentPushable != previousPushable)
-            {//we changed pushable (or don't have one anymore), stop the old one sound
+            {
                 previousPushable.EndPushing();
             }
 
@@ -513,7 +509,7 @@ namespace Gamekit2D
 
         public void MovePushable()
         {
-            //we don't push ungrounded pushable, avoid pushing floating pushable or falling pushable.
+            
             if (m_CurrentPushable && m_CurrentPushable.Grounded)
                 m_CurrentPushable.Move(m_MoveVector * Time.deltaTime);
         }
@@ -600,7 +596,7 @@ namespace Gamekit2D
                     PhysicsHelper.TryGetPlatformEffector (col, out effector);
                     FallthroughReseter reseter = effector.gameObject.AddComponent<FallthroughReseter>();
                     reseter.StartFall(effector);
-                    //set invincible for half a second when falling through a platform, as it will make the player "standup"
+                    
                     StartCoroutine(FallThroughtInvincibility());
                 }
             }
@@ -682,7 +678,7 @@ namespace Gamekit2D
 
         public void OnHurt(Damager damager, Damageable damageable)
         {
-            //if the player don't have control, we shouldn't be able to be hurt as this wouldn't be fair
+            
             if (!PlayerInput.Instance.HaveControl)
                 return;
 
@@ -691,14 +687,14 @@ namespace Gamekit2D
 
             m_Animator.SetTrigger(m_HashHurtPara);
 
-            //we only force respawn if helath > 0, otherwise both forceRespawn & Death trigger are set in the animator, messing with each other.
+            
             if(damageable.CurrentHealth > 0 && damager.forceRespawn)
                 m_Animator.SetTrigger(m_HashForcedRespawnPara);
 
             m_Animator.SetBool(m_HashGroundedPara, false);
             hurtAudioPlayer.PlayRandomSound();
 
-            //if the health is < 0, mean die callback will take care of respawn
+            
             if(damager.forceRespawn && damageable.CurrentHealth > 0)
             {
                 StartCoroutine(DieRespawnCoroutine(false, true));
@@ -715,7 +711,7 @@ namespace Gamekit2D
         IEnumerator DieRespawnCoroutine(bool resetHealth, bool useCheckPoint)
         {
             PlayerInput.Instance.ReleaseControl(true);
-            yield return new WaitForSeconds(1.0f); //wait one second before respawing
+            yield return new WaitForSeconds(1.0f); 
             yield return StartCoroutine(ScreenFader.FadeSceneOut(useCheckPoint ? ScreenFader.FadeType.Black : ScreenFader.FadeType.GameOver));
             if(!useCheckPoint)
                 yield return new WaitForSeconds (2f);
@@ -777,10 +773,10 @@ namespace Gamekit2D
             if (resetHealth)
                 damageable.SetHealth(damageable.startingHealth);
 
-            //we reset the hurt trigger, as we don't want the player to go back to hurt animation once respawned
+            
             m_Animator.ResetTrigger(m_HashHurtPara);
             if (m_FlickerCoroutine != null)
-            {//we stop flcikering for the same reason
+            {
                 StopFlickering();
             }
 
@@ -803,7 +799,7 @@ namespace Gamekit2D
             m_LastCheckpoint = checkpoint;
         }
 
-        //This is called by the inventory controller on key grab, so it can update the Key UI.
+        
         public void KeyInventoryEvent()
         {
             if (KeyUI.Instance != null) KeyUI.Instance.ChangeKeyUI(m_InventoryController);

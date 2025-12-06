@@ -9,7 +9,7 @@ namespace Gamekit2D
 
         private void Awake()
         {
-            //This allow to make Pool manually added in the scene still automatically findable & usable
+            
             if(prefab != null && !s_PoolInstances.ContainsKey(prefab))
                 s_PoolInstances.Add(prefab, this);
         }
@@ -19,7 +19,7 @@ namespace Gamekit2D
             s_PoolInstances.Remove(prefab);
         }
 
-        //initialPoolCount is only used when the objectpool don't exist
+        
         static public BulletPool GetObjectPool(GameObject prefab, int initialPoolCount = 10)
         {
             BulletPool objPool = null;

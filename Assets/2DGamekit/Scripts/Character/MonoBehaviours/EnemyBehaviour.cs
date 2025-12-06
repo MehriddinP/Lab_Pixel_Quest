@@ -73,7 +73,7 @@ namespace Gamekit2D
 
         protected float m_FireTimer = 0.0f;
 
-        //as we flip the sprite instead of rotating/scaling the object, this give the forward vector according to the sprite orientation
+        
         protected Vector2 m_SpriteForward;
         protected Bounds m_LocalBounds;
         protected Vector3 m_LocalDamagerPosition;
@@ -176,7 +176,7 @@ namespace Gamekit2D
 
         public bool CheckForObstacle(float forwardDistance)
         {
-            //we circle cast with a size sligly small than the collider height. That avoid to collide with very small bump on the ground
+            
             if (Physics2D.CircleCast(m_Collider.bounds.center, m_Collider.bounds.extents.y - 0.2f, m_SpriteForward, forwardDistance, m_Filter.layerMask.value))
             {
                 return true;
@@ -229,7 +229,7 @@ namespace Gamekit2D
 
         public void ScanForPlayer()
         {
-            //If the player don't have control, they can't react, so do not pursue them
+            
             if (!PlayerInput.Instance.HaveControl)
                 return;
 
@@ -284,7 +284,7 @@ namespace Gamekit2D
 
                 if (angle <= viewFov * 0.5f)
                 {
-                    //we reset the timer if the target is at viewing distance.
+                    
                     m_TimeSinceLastTargetView = timeBeforeTargetLost;
                 }    
             }
@@ -302,8 +302,7 @@ namespace Gamekit2D
             m_Target = null;
         }
 
-        //This is used in case where there is a delay between deciding to shoot and shoot (e.g. Spitter that have an animation before spitting)
-        //so we shoot where the target was when the animation started, not where it is when the actual shooting happen
+        
         public void RememberTargetPos()
         {
             if (m_Target == null)
@@ -312,11 +311,11 @@ namespace Gamekit2D
             m_TargetShootPosition = m_Target.transform.position;
         }
 
-        //Call every frame when the enemy is in pursuit to check for range & Trigger the attack if in range
+        
         public void CheckMeleeAttack()
         {
             if (m_Target == null)
-            {//we lost the target, shouldn't shoot
+            {
                 return;
             }
 
@@ -327,7 +326,7 @@ namespace Gamekit2D
             }
         }
 
-        //This is called when the damager get enabled (so the enemy can damage the player). Likely be called by the animation throught animation event (see the attack animation of the Chomper)
+        
         public void StartAttack()
         {
             if (m_SpriteRenderer.flipX)
@@ -351,7 +350,7 @@ namespace Gamekit2D
             }
         }
 
-        //This is call each update if the enemy is in a attack/shooting state, but the timer will early exit if too early to shoot.
+        
         public void CheckShootingTimer()
         {
             if (m_FireTimer > 0.0f)
@@ -360,7 +359,7 @@ namespace Gamekit2D
             }
 
             if (m_Target == null)
-            {//we lost the target, shouldn't shoot
+            {
                 return;
             }
 
@@ -374,7 +373,7 @@ namespace Gamekit2D
         {
             Vector2 shootPosition = shootingOrigin.transform.localPosition;
 
-            //if we are flipped compared to normal, we need to localy flip the shootposition too
+            
             if ((spriteFaceLeft && m_SpriteForward.x > 0) || (!spriteFaceLeft && m_SpriteForward.x > 0))
                 shootPosition.x *= -1;
 
@@ -385,7 +384,7 @@ namespace Gamekit2D
             obj.rigidbody2D.velocity = (GetProjectilVelocity(m_TargetShootPosition, shootingOrigin.transform.position));
         }
 
-        //This will give the velocity vector needed to give to the bullet rigidbody so it reach the given target from the origin.
+        
         private Vector3 GetProjectilVelocity(Vector3 target, Vector3 origin)
         {
             const float projectileSpeed = 30.0f;
@@ -397,7 +396,7 @@ namespace Gamekit2D
             float b = projectileSpeed * projectileSpeed + Vector3.Dot(toTarget, Physics.gravity);
             float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
 
-            // Check whether the target is reachable at max speed or less.
+            
             if (discriminant < 0)
             {
                 velocity = toTarget;
@@ -411,18 +410,18 @@ namespace Gamekit2D
 
             float discRoot = Mathf.Sqrt(discriminant);
 
-            // Highest
+            
             float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
 
-            // Lowest speed arc
+            
             float T_lowEnergy = Mathf.Sqrt(Mathf.Sqrt(toTarget.sqrMagnitude * 4f / gSquared));
 
-            // Most direct with max speed
+            
             float T_min = Mathf.Sqrt((b - discRoot) * 2f / gSquared);
 
             float T = 0;
 
-            // 0 = highest, 1 = lowest, 2 = most direct
+            
             int shotType = 1;
 
             switch (shotType)
@@ -531,7 +530,7 @@ namespace Gamekit2D
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            //draw the cone of view
+            
             Vector3 forward = spriteFaceLeft ? Vector2.left : Vector2.right;
             forward = Quaternion.Euler(0, 0, spriteFaceLeft ? -viewDirection : viewDirection) * forward;
 
@@ -542,15 +541,14 @@ namespace Gamekit2D
             Handles.color = new Color(0, 1.0f, 0, 0.2f);
             Handles.DrawSolidArc(transform.position, -Vector3.forward, (endpoint - transform.position).normalized, viewFov, viewDistance);
 
-            //Draw attack range
+            
             Handles.color = new Color(1.0f, 0,0, 0.1f);
             Handles.DrawSolidDisc(transform.position, Vector3.back, meleeRange);
         }
 #endif
     }
 
-    //bit hackish, to avoid to have to redefine the whole inspector, we use an attirbute and associated property drawer to 
-    //display a warning above the melee range when it get over the view distance.
+    
     public class EnemyMeleeRangeCheckAttribute : PropertyAttribute
     {
 

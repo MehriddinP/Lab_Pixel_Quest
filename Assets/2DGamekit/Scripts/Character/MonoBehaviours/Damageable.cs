@@ -73,7 +73,7 @@ namespace Gamekit2D
         public void EnableInvulnerability(bool ignoreTimer = false)
         {
             m_Invulnerable = true;
-            //technically don't ignore timer, just set it to an insanly big number. Allow to avoid to add more test & special case.
+            
             m_InulnerabilityTimer = ignoreTimer ? float.MaxValue : invulnerabilityDuration;
         }
 
@@ -92,8 +92,7 @@ namespace Gamekit2D
             if ((m_Invulnerable && !ignoreInvincible) || m_CurrentHealth <= 0)
                 return;
 
-            //we can reach that point if the damager was one that was ignoring invincible state.
-            //We still want the callback that we were hit, but not the damage to be removed from health.
+            
             if (!m_Invulnerable)
             {
                 m_CurrentHealth -= damager.damage;

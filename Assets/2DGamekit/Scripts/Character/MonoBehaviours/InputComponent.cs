@@ -61,8 +61,7 @@ namespace Gamekit2D
             protected bool m_Enabled = true;
             protected bool m_GettingInput = true;
 
-            //This is used to change the state of a button (Down, Up) only if at least a FixedUpdate happened between the previous Frame
-            //and this one. Since movement are made in FixedUpdate, without that an input could be missed it get press/release between fixedupdate
+            
             bool m_AfterFixedUpdateDown;
             bool m_AfterFixedUpdateHeld;
             bool m_AfterFixedUpdateUp;
