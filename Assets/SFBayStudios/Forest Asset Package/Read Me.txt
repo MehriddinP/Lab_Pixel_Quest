@@ -1,0 +1,28 @@
+2D Hand Painted Forest World & Assets
+
+*****************************
+*IMPORTANT BEFORE IMPORTING!*
+*****************************
+Looks like the Sorting Layers aren't brought over in the package, and unfortunately it also looks like adding them in your new project before importing the package doesn't re-link the layers, so they're all "missing".
+
+We'll contact Unity to see if this is a bug or if there's another way of doing it, but for now, to see the demo project properly you'll have to first make sure your project is set up for 2D (when you create the project, selection @ the bottom of the new project window).
+
+Next, add sorting layers (Edit -> Project Settings -> Layers and Tags) for the following:
+
+Sky | Background | Mid Background | Character | Foreground | UI
+
+Our test indicate that even if you have the exact layers pre-named, in the exact order we have in our export, they still end up "missing" in for each asset. So you'll have to re-layer them. This can be tedious, which sucks.
+
+Background Far = Background Layer
+Background Near 1 & 2 = Mid Background Layer
+Background Sky = Sky Layer
+Foreground = Foreground Layer
+Player, Play Field, Play Field Assets = Character Layer
+
+Even selecting all objects can take a long time due to the nested directories. It may be better to simply just start building your own level. We'll update if we find a fix.
+*****************************
+
+
+All of the assets are available in the Assets/Forest Asset Package/Forest Prefabs directory.  You'll find the root files in the "Forest Textures" directory.
+
+Please visit http://www.InfinityPBR.com for AAA quality characters, creatures, environements, and more.
